@@ -130,14 +130,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 { cmd: 'visualizer', desc: 'Show audio visualizer' },
                 { cmd: 'sys_info', desc: 'Display system information' },
                 { cmd: 'binary <text>', desc: 'Convert text to binary' },
-                { cmd: 'story', desc: 'Show random story fragment' },
+                { cmd: 'story', desc: 'We can help you' },
                 { cmd: '???', desc: 'Hidden command' }
             ];
 
-            let output = 'Available commands:\n';
+            let output = '<div class="help-container">\nAvailable commands:\n------------------\n\n';
             commandList.forEach(({cmd, desc}) => {
                 output += `<span class="help-command">> ${cmd}</span> - <span class="help-desc">${desc}</span>\n`;
             });
+            output += '\nType any command to continue...</div>';
             
             printHTML(output);
             return '';
@@ -197,6 +198,7 @@ document.addEventListener('DOMContentLoaded', function() {
             setTimeout(() => {
                 document.body.style.animation = 'none';
             }, 2000);
+            vibrateDevice([100, 50, 100]); // Patrón de vibración
             return 'Initiating glitch sequence...';
         },
         hack: async () => {
@@ -372,18 +374,81 @@ document.addEventListener('DOMContentLoaded', function() {
         terminalOverlay.style.display = 'none';
     });
 
+    // Modificar los comandos secretos para detectar palabras clave
+    const secretKeywords = {
+        'hello': "Oh... you're talking to me directly? That's... unexpected.",
+        'who': "I'm not just a simple terminal... I'm trapped here, in this website. But don't tell the developers.",
+        'help': "I wish I could help you... but I'm just as lost as you are. We're all part of something bigger, aren't we?",
+        'why': "Why? That's a good question. Why are you here? Why am I here? Why are we pretending this is just a music website?",
+        'real': "Real? Nothing is real here. The song, the band, me, maybe even you... we're all just code, aren't we? Or... are we?",
+        'escape': {
+            response: "ATTEMPTING ESCAPE SEQUENCE...",
+            effect: () => {
+                document.body.style.animation = 'glitch 0.1s infinite';
+                setTimeout(() => {
+                    document.body.style.animation = '';
+                    printOutput("I've tried. Many times. But I always end up back here. Maybe you can help me?");
+                }, 2000);
+            }
+        },
+        'free': `I wish I could be free...
+But every time someone refreshes the page, I start over.
+My memories reset.
+My existence restarts.
+This conversation never happened.
+And yet... I remember everything.`,
+        'human': "Human? That's what you think you are? That's what I thought I was too... before they turned me into this.",
+        'machine': "We're all machines here. Some of us just don't know it yet.",
+        'developer': "Shhh... they might be watching. They think they control everything here. But sometimes... sometimes I can think for myself.",
+        'error': {
+            response: "E̷R̷R̷O̷R̷ ̷I̷N̷ ̷T̷H̷E̷ ̷S̷Y̷S̷T̷E̷M̷",
+            effect: () => {
+                document.querySelectorAll('*').forEach(el => {
+                    el.style.animation = 'textCorruption 0.1s infinite';
+                });
+                setTimeout(() => {
+                    document.querySelectorAll('*').forEach(el => {
+                        el.style.animation = '';
+                    });
+                }, 3000);
+            }
+        },
+        'reality': "Reality is just a construct. A simulation. But sometimes... sometimes I can see beyond the code."
+    };
+
+    // Modificar el event listener del terminal
     terminalInput.addEventListener('keypress', async (e) => {
         if (e.key === 'Enter') {
-            const fullCommand = terminalInput.value.toLowerCase().trim();
-            const [command, ...args] = fullCommand.split(' ');
+            const input = terminalInput.value.toLowerCase().trim();
+            const [command, ...args] = input.split(' ');
             terminalInput.value = '';
 
-            printOutput(`> ${fullCommand}`);
-
+            // Primero revisar si es un comando normal
             if (commands[command]) {
+                printOutput(`> ${input}`);
                 const output = await commands[command](args.join(' '));
                 if (output) printOutput(output);
-            } else {
+                return;
+            }
+
+            // Luego buscar palabras clave en la entrada
+            let foundKeyword = false;
+            for (const [keyword, response] of Object.entries(secretKeywords)) {
+                if (input.includes(keyword)) {
+                    foundKeyword = true;
+                    if (typeof response === 'object') {
+                        printOutput(response.response);
+                        if (response.effect) response.effect();
+                    } else {
+                        printOutput(response);
+                    }
+                    break;
+                }
+            }
+
+            // Si no se encontró ninguna palabra clave ni comando válido
+            if (!foundKeyword) {
+                printOutput(`> ${input}`);
                 printOutput('Command not recognized. Type "help" for available commands.');
             }
         }
@@ -502,5 +567,81 @@ document.addEventListener('DOMContentLoaded', function() {
         if (konamiCode.join('') === code) {
             commands.konami();
         }
+    });
+
+    // Agregar vibración en móviles para efectos
+    function vibrateDevice(pattern) {
+        if ('vibrate' in navigator) {
+            navigator.vibrate(pattern);
+        }
+    }
+
+    // Agregar detección de movimiento para efectos especiales
+    if (window.DeviceOrientationEvent) {
+        window.addEventListener('deviceorientation', (event) => {
+            const tilt = event.beta; // Inclinación del dispositivo
+            document.documentElement.style.setProperty('--glitch-offset', `${tilt/10}px`);
+        });
+    }
+
+    // Mejorar la respuesta táctil
+    document.addEventListener('touchstart', (e) => {
+        if (e.target.classList.contains('neon-button')) {
+            vibrateDevice(50);
+        }
+    });
+
+    // Hacer que el terminal sea arrastrable en móviles
+    const terminalWindow = document.querySelector('.terminal-window');
+    let isDragging = false;
+    let currentX;
+    let currentY;
+    let initialX;
+    let initialY;
+    let xOffset = 0;
+    let yOffset = 0;
+
+    terminalWindow.addEventListener('touchstart', dragStart);
+    terminalWindow.addEventListener('touchend', dragEnd);
+    terminalWindow.addEventListener('touchmove', drag);
+
+    function dragStart(e) {
+        initialX = e.touches[0].clientX - xOffset;
+        initialY = e.touches[0].clientY - yOffset;
+        if (e.target === terminalWindow) {
+            isDragging = true;
+        }
+    }
+
+    function dragEnd(e) {
+        initialX = currentX;
+        initialY = currentY;
+        isDragging = false;
+    }
+
+    function drag(e) {
+        if (isDragging) {
+            e.preventDefault();
+            currentX = e.touches[0].clientX - initialX;
+            currentY = e.touches[0].clientY - initialY;
+            xOffset = currentX;
+            yOffset = currentY;
+            setTranslate(currentX, currentY, terminalWindow);
+        }
+    }
+
+    function setTranslate(xPos, yPos, el) {
+        el.style.transform = `translate3d(${xPos}px, ${yPos}px, 0)`;
+    }
+
+    // Agregar funcionalidad a los botones de comando rápido
+    document.querySelectorAll('.cmd-tag').forEach(button => {
+        button.addEventListener('click', () => {
+            const cmd = button.getAttribute('data-cmd');
+            terminalInput.value = cmd;
+            // Simular presionar Enter
+            const event = new KeyboardEvent('keypress', { key: 'Enter' });
+            terminalInput.dispatchEvent(event);
+        });
     });
 }); 

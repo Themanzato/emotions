@@ -252,8 +252,8 @@ body {
 
 .terminal-button {
     position: fixed;
-    bottom: 30px;
-    right: 30px;
+    bottom: 20px;
+    right: 20px;
     z-index: 9999;
     background: rgba(0, 0, 0, 0.9);
     backdrop-filter: blur(5px);
@@ -313,11 +313,20 @@ body {
     position: relative;
 }
 
+.terminal-content pre {
+    white-space: pre-wrap;
+    font-family: 'Courier New', monospace;
+    line-height: 1.5;
+    margin: 0;
+    padding: 10px 0;
+}
+
 .terminal-output {
     flex-grow: 1;
     overflow-y: auto;
     margin-bottom: 20px;
     padding-bottom: 10px;
+    padding: 10px;
 }
 
 .terminal-input-line {
@@ -540,6 +549,12 @@ body {
 }
 
 /* Estilos para el comando help */
+.help-container {
+    font-family: 'Courier New', monospace;
+    line-height: 1.6;
+    white-space: pre-wrap;
+}
+
 .help-command {
     color: #ff0000;
     text-shadow: 0 0 5px #ff0000;
@@ -549,4 +564,120 @@ body {
 .help-desc {
     color: #0f0;
     text-shadow: 0 0 5px #0f0;
+}
+
+/* Agregar media queries para dispositivos móviles */
+@media screen and (max-width: 768px) {
+    .terminal-button {
+        bottom: 15px;
+        right: 15px;
+        padding: 8px 15px;
+        font-size: 14px;
+        transform: scale(0.9);
+    }
+
+    .terminal-button:hover {
+        transform: scale(0.95);
+    }
+
+    .terminal-window {
+        width: 90%;
+        height: 80vh;
+        margin: 10% auto;
+    }
+
+    .terminal-input {
+        font-size: 14px;
+    }
+
+    .commands-list {
+        font-size: 14px;
+    }
+
+    .commands-list ul li {
+        margin: 5px 0;
+    }
+
+    /* Mejorar la experiencia táctil */
+    .neon-button {
+        margin: 10px 5px;
+        padding: 12px 20px;
+    }
+
+    /* Hacer el efecto glitch más visible en móvil */
+    .glitch {
+        font-size: 2.5rem;
+    }
+
+    /* Mejorar la legibilidad del texto */
+    .description p {
+        font-size: 16px;
+        line-height: 1.4;
+    }
+}
+
+/* Ajustes específicos para pantallas muy pequeñas */
+@media screen and (max-width: 480px) {
+    .terminal-button {
+        padding: 6px 12px;
+        font-size: 12px;
+        transform: scale(0.8);
+    }
+
+    .button-text {
+        margin-left: 5px;
+    }
+
+    .terminal-window {
+        width: 95%;
+        height: 85vh;
+    }
+}
+
+/* Barra de comandos rápidos */
+.quick-commands {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    padding: 10px;
+    border-top: 1px solid rgba(0, 255, 0, 0.2);
+    background: rgba(0, 0, 0, 0.8);
+}
+
+.cmd-tag {
+    background: none;
+    border: 1px solid var(--neon-color);
+    color: var(--neon-color);
+    padding: 3px 8px;
+    font-size: 12px;
+    cursor: pointer;
+    font-family: 'Courier New', monospace;
+    transition: all 0.3s ease;
+}
+
+.cmd-tag:hover {
+    background: var(--neon-color);
+    color: #000;
+    box-shadow: 0 0 5px var(--neon-color);
+}
+
+.special-cmd {
+    border-color: #ff0000;
+    color: #ff0000;
+}
+
+.special-cmd:hover {
+    background: #ff0000;
+    box-shadow: 0 0 5px #ff0000;
+}
+
+/* Ajustar el espacio para la barra de comandos */
+.terminal-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.terminal-output {
+    flex-grow: 1;
+    margin-bottom: 10px;
 } 
