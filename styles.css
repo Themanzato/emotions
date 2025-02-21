@@ -10,6 +10,15 @@ body {
     margin: 0;
     padding: 20px;
     overflow-x: hidden;
+    min-height: 100vh;
+    width: 100%;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.content {
+    max-width: 100%;
+    overflow-x: hidden;
 }
 
 .glitch-container {
@@ -31,6 +40,9 @@ body {
     background: rgba(0, 0, 0, 0.8);
     border: 2px solid var(--neon-color);
     box-shadow: 0 0 10px var(--neon-color);
+    max-width: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
 }
 
 .description {
@@ -139,6 +151,8 @@ body {
     height: 100%;
     pointer-events: none;
     z-index: 1;
+    overflow: hidden;
+    max-width: 100vw;
     overflow: hidden;
 }
 
@@ -259,15 +273,17 @@ body {
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
     border: 2px solid var(--neon-color);
-    padding: 15px 25px;
-    font-size: 1.2em;
+    padding: 12px 20px;
+    font-size: 1em;
     cursor: pointer;
-    overflow: hidden;
-    transition: all 0.3s;
-    color: var(--neon-color);
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
+    margin: 0;
+    transform: none;
+    white-space: nowrap;
+    color: #0f0;
+    text-shadow: 0 0 5px #0f0;
 }
 
 .terminal-button::before {
@@ -296,10 +312,11 @@ body {
 }
 
 .terminal-button:hover {
-    background: var(--neon-color);
-    color: #000;
-    box-shadow: 0 0 5px var(--neon-color),
-                0 0 25px var(--neon-color);
+    background: rgba(0, 255, 0, 0.2);
+    border-color: #0f0;
+    box-shadow: 0 0 5px #0f0,
+                0 0 25px #0f0;
+    color: #0f0;
 }
 
 .terminal-content {
@@ -568,26 +585,48 @@ body {
 
 /* Agregar media queries para dispositivos móviles */
 @media screen and (max-width: 768px) {
-    .terminal-button {
-        bottom: 15px;
-        right: 15px;
-        padding: 8px 15px;
-        font-size: 14px;
-        transform: scale(0.9);
+    body {
+        padding: 10px;
     }
 
-    .terminal-button:hover {
-        transform: scale(0.95);
+    .glitch {
+        font-size: 3rem;
+    }
+
+    .player-links {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .neon-button {
+        width: 90%;
+        justify-content: center;
+        margin: 5px 0;
     }
 
     .terminal-window {
-        width: 90%;
+        width: 95%;
         height: 80vh;
-        margin: 10% auto;
+        margin: 0 auto;
     }
 
-    .terminal-input {
-        font-size: 14px;
+    .quick-commands {
+        padding: 5px;
+        gap: 3px;
+    }
+
+    .cmd-tag {
+        padding: 2px 6px;
+        font-size: 11px;
+    }
+
+    .terminal-button {
+        padding: 8px 15px;
+        font-size: 0.9em;
+    }
+
+    .terminal-button i {
+        font-size: 1.2em;
     }
 
     .commands-list {
@@ -604,11 +643,6 @@ body {
         padding: 12px 20px;
     }
 
-    /* Hacer el efecto glitch más visible en móvil */
-    .glitch {
-        font-size: 2.5rem;
-    }
-
     /* Mejorar la legibilidad del texto */
     .description p {
         font-size: 16px;
@@ -618,20 +652,50 @@ body {
 
 /* Ajustes específicos para pantallas muy pequeñas */
 @media screen and (max-width: 480px) {
-    .terminal-button {
-        padding: 6px 12px;
-        font-size: 12px;
-        transform: scale(0.8);
+    .glitch {
+        font-size: 2.5rem;
     }
 
-    .button-text {
-        margin-left: 5px;
+    .terminal-button {
+        bottom: 15px;
+        right: 15px;
+        padding: 6px 12px;
     }
 
     .terminal-window {
-        width: 95%;
+        width: 98%;
         height: 85vh;
     }
+
+    .commands-list {
+        font-size: 0.9em;
+    }
+
+    .quick-commands {
+        max-height: 100px;
+        overflow-y: auto;
+    }
+}
+
+/* Prevenir zoom en inputs en iOS */
+@media screen and (max-width: 768px) {
+    input[type="text"],
+    input[type="number"],
+    textarea {
+        font-size: 16px;
+    }
+}
+
+/* Asegurar que el contenido no se desborde */
+.vhs-effect {
+    max-width: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.lyrics-container {
+    max-width: 100vw;
+    overflow: hidden;
 }
 
 /* Barra de comandos rápidos */
