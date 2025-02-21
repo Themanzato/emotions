@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trixie&Molly - Emo-tions</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <audio id="glitchAudio" loop>
+        <source src="assets/glitch.mp3" type="audio/mpeg">
+    </audio>
+</head>
+<body>
+    <div class="glitch-container">
+        <h1 class="glitch" data-text="EMO-TIONS">EMO-TIONS</h1>
+    </div>
+
+    <div class="content">
+        <div class="vhs-effect">
+            <div class="description">
+                <h2>Trixie&Molly</h2>
+                <p class="typewriter">You are no longer to be human...</p>
+            </div>
+
+            <div class="lyrics-container"></div>
+
+            <div class="player-links">
+                <a href="https://open.spotify.com/intl-es/track/51ZPfqQztg43dVugphVS2X" class="neon-button" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-spotify"></i>
+                    <span></span><span></span><span></span><span></span>
+                    LISTEN ON SPOTIFY
+                </a>
+                
+                <a href="https://www.youtube.com/watch?v=GdswkzAHXE4" class="neon-button" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-youtube"></i>
+                    <span></span><span></span><span></span><span></span>
+                    WATCH ON YOUTUBE
+                </a>
+
+                <a href="https://music.apple.com/mx/album/emo-tions/1791338290?i=1791338291" class="neon-button" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-apple"></i>
+                    <span></span><span></span><span></span><span></span>
+                    LISTEN ON APPLE MUSIC
+                </a>
+
+                <a href="https://www.deezer.com/es/track/3189012361" class="neon-button" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-deezer"></i>
+                    <span></span><span></span><span></span><span></span>
+                    LISTEN ON DEEZER
+                </a>
+            </div>
+
+            <div class="interactive-element">
+                <div class="static-tv" id="staticEffect"></div>
+            </div>
+
+            <div class="terminal-section">
+                <div class="commands-list">
+                    <p class="glitch-text">Available commands:</p>
+                    <ul>
+                        <li>> help - Show all commands</li>
+                        <li>> play - Play the song on different platforms</li>
+                        <li>> lyrics - Display full lyrics</li>
+                        <li>> about - Band information</li>
+                        <li>> clear - Clear terminal</li>
+                        <li>> glitch - Trigger glitch effect</li>
+                        <li>> hack - The system has failed...</li>
+                        <li>> theme - Change theme (matrix/horror/cyber/default)</li>
+                        <li>> rain - Activate matrix rain effect</li>
+                        <li>> decrypt - Play decryption game</li>
+                        <li>> ascii - Show ASCII art</li>
+                        <li>> visualizer - Show audio visualizer</li>
+                        <li>> sys_info - Display system information</li>
+                        <li>> binary - Convert text to binary</li>
+                        <li>> story - Show random story fragment</li>
+                        <li class="secret-command">> ??? - Hidden command</li>
+                    </ul>
+                </div>
+                
+                <button class="terminal-button" id="openTerminal">
+                    <i class="fas fa-terminal"></i>
+                    <span class="button-text">/ TERMINAL</span>
+                    <div class="button-glitch"></div>
+                </button>
+            </div>
+
+            <div class="terminal-overlay" id="terminalOverlay">
+                <div class="terminal-window">
+                    <div class="terminal-header">
+                        <span class="terminal-title">EMO-TIONS.exe</span>
+                        <button class="close-terminal" id="closeTerminal">×</button>
+                    </div>
+                    <div class="terminal-content" id="terminalContent">
+                        <div class="terminal-output"></div>
+                        <div class="terminal-input-line">
+                            <span class="prompt">></span>
+                            <input type="text" 
+                                   class="terminal-input" 
+                                   id="terminalInput" 
+                                   autocomplete="off" 
+                                   spellcheck="false"
+                                   aria-label="Terminal input"
+                                   placeholder="Type a command...">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 
